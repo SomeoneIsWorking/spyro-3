@@ -72,9 +72,9 @@ Statuses: ✅ re-verified · 🟡 re-partial · 🔬 in-progress · ⬜ todo · 
 - gap: none for interpolation: the drawers run inside the field redraw (spyro2.field-redraw), which re-runs them at the in-between's inputs; they stay guest code.
 
 ### spyro3.text-font — Spyro 3's 2D text font and button icons
-- status: re-partial
+- status: re-verified
 - deps: spyro3.identity
-- evidence: FUN_8002E748 (sprites) and FUN_8002E970 (quads), decompiled from SCUS_944.67, are Spyro 2's two layouts over this image's words: cursor *0x8006C664, pair *0x8006C638, g_TextGlyphCells 0x800666F0, g_TextEscapes 0x800667F0..0x8006681E, g_TextColours 0x80066820; the same texture page 0xE1000618, CLUT words 0x4922 (text) and 0x4962 (icons) and the same cell grid. Against Spyro 2 the table adds '+' (cell 130) and '=' (cell 51) and narrows eleven capitals' and h's advance by one, t's widens by one. Icons '<' Cross, '>' Square, '{' Circle, '}' Triangle, from WAD.WAD strings 'Press the < button to jump', 'just jump, then press the } button in the air' (stomp), 'Press > or { to kick enemies'.
-- where: game/render/overlay_pair.*; titles/spyro3/render/render_facts.h
-- gap: The icon cells' pixels are not yet captured to confirm the shapes the strings imply.
+- evidence: FUN_8002E748 (sprites) and FUN_8002E970 (quads), decompiled from SCUS_944.67, are Spyro 2's two layouts over this image's words: cursor *0x8006C664, pair *0x8006C638, g_TextGlyphCells 0x800666F0, g_TextEscapes 0x800667F0..0x8006681E, g_TextColours 0x80066820; the same texture page 0xE1000618, CLUT words 0x4922 (text) and 0x4962 (icons) and the same cell grid. Against Spyro 2 the table adds '+' (cell 130) and '=' (cell 51) and narrows eleven capitals' and h's advance by one, t's widens by one. Icons '<' Cross, '>' Square, '{' Circle, '}' Triangle, from WAD.WAD strings 'Press the < button to jump', 'just jump, then press the } button in the air' (stomp), 'Press > or { to kick enemies'. A raw VRAM dump of the page shows cells 105-108 as the cross (index 1), square (2), circle (4) and triangle (3), one index each and unshadowed, cell 130 the '+', and the other cells as Spyro 2's. Letters shade down the cell through indices 5 8 7 3 9 6 4 a b (1 and c the darkest few) over a drop shadow one texel right and below in index 2, the one index no texel of which has an empty texel up-left of it (letter cells 0-20, 32-52, 64-83).
+- where: game/render/overlay_pair.*; game/render/text_font.h; titles/spyro3/render/render_facts.h
+- gap: none
 - notes: cross-title dep: spyro2.text-font (spyro-2). Plans 0206 and 0207 replace these cells at present time.
