@@ -78,3 +78,10 @@ Statuses: ✅ re-verified · 🟡 re-partial · 🔬 in-progress · ⬜ todo · 
 - where: game/render/overlay_pair.*; game/render/text_font.h; titles/spyro3/render/render_facts.h
 - gap: none
 - notes: cross-title dep: spyro2.text-font (spyro-2). Plans 0206 and 0207 replace these cells at present time.
+### spyro3.atlas-font — Spyro 3's Atlas book font
+- status: re-partial
+- deps: spyro3.text-font
+- evidence: the Atlas (pause, Atlas) draws its text as semi-transparent textured quads (0x2E), 12x9 on screen, twice: a shadow pass modulated 0x202020 and the text modulated 0x78898C (e.g. 0x801AC420, 0x801AD0A0), all from DR_TPAGE 0x0009 (x 576 y 0, 4bpp) through CLUT 0x09F2. That page, loaded with the Atlas, packs the book font's glyphs at varying u/v (not a fixed grid: v 51, 57, 60, 66, 69, 74, 78 ...) with the Triangle, Square, Circle and Cross icons below them.
+- where: —
+- gap: the Atlas text drawer and its glyph table (each character's u, v, size).
+- notes: Plan 0207's OutlineFont is a fixed grid; this font needs per-glyph rects.
