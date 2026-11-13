@@ -19,3 +19,6 @@ tools/dumpsxiso.exe
 tools/wadtoolrust.exe
 /wad-data
 /cd-data
+
+# long-lived ignored inputs and derived assets (Ghidra projects, decompiled output)
+env-assets/
