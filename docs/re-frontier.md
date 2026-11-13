@@ -70,3 +70,11 @@ Statuses: ✅ re-verified · 🟡 re-partial · 🔬 in-progress · ⬜ todo · 
 - evidence: the moby walk `0x80030478` does not project its mobys: it writes a 0x44-byte render-list entry (record at +0x40, mesh at +0x04, rotation at +0x28) and hands the list base to the guest in GTE data registers (VXY1 = scratch base - 0x3000, VZ1 = the parked parameter at `0x8006C5DC`). The three moby mesh drawers are `0x80031124`, `0x80033C5C` and `0x8002DDA8`, the three calls `FUN_8001EC5C` makes straight after the walk, one per list the walk builds; `0x8003CDA0` behind the state guard is the 2D/overlay pass. Each is one guest call over its whole list, with the per-moby loop inside it (`FUN_80031124` alone is 2153 lines of Ghidra C).
 - where: titles/spyro3/render/render_facts.h
 - gap: none for interpolation: the drawers run inside the field redraw (spyro2.field-redraw), which re-runs them at the in-between's inputs; they stay guest code.
+
+### spyro3.text-font — Spyro 3's 2D text font and button icons
+- status: re-partial
+- deps: spyro3.identity
+- evidence: FUN_8002E748 (sprites) and FUN_8002E970 (quads), decompiled from SCUS_944.67, are Spyro 2's two layouts over this image's words: cursor *0x8006C664, pair *0x8006C638, g_TextGlyphCells 0x800666F0, g_TextEscapes 0x800667F0..0x8006681E, g_TextColours 0x80066820; the same texture page 0xE1000618, CLUT words 0x4922 (text) and 0x4962 (icons) and the same cell grid. Against Spyro 2 the table adds '+' (cell 130) and '=' (cell 51) and narrows eleven capitals' and h's advance by one, t's widens by one. Icons '<' Cross, '>' Square, '{' Circle, '}' Triangle, from WAD.WAD strings 'Press the < button to jump', 'just jump, then press the } button in the air' (stomp), 'Press > or { to kick enemies'.
+- where: game/render/overlay_pair.*; titles/spyro3/render/render_facts.h
+- gap: The icon cells' pixels are not yet captured to confirm the shapes the strings imply.
+- notes: cross-title dep: spyro2.text-font (spyro-2). Plans 0206 and 0207 replace these cells at present time.

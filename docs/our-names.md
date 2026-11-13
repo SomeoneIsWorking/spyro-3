@@ -83,6 +83,9 @@ The symbol map (`preparation/symbol_addrs.txt`) keeps the tree's names; ours ent
 | `0x80066244` | `g_TerrainFactsQuadPieces_80066244` | `D_80066244` | `titles/spyro3/render/render_facts.h` |  |
 | `0x80066274` | `g_IntroCardDeltaTable` | `D_80066274` | `titles/spyro3/render/intro_card_facts.h` |  |
 | `0x80066530` | `g_MobyFactsKeyframeBlend` | `D_80066530` | `titles/spyro3/render/render_facts.h` |  |
+| `0x800666F0` | `g_TextGlyphCells` | `D_800666F0` | — | u16 per character code: bits 0-4 cell column (u 12·col), 5-7 row (v 9·row), 8-11 advance, 12-15 signed y offset; low byte 0xFF no cell |
+| `0x800667F0` | `g_TextEscapes` | `D_800667F0` | — | '@' escapes to 0x8006681E: (char, byte offset into g_TextGlyphCells; bit 7 an accent drawn back over the last letter) |
+| `0x80066820` | `g_TextColours` | `D_80066820` | — | ten SPRT colour words, chosen by the layouts' colour argument or '@' + digit |
 | `0x80066998` | `g_RenderFactsMobyDeferredPaletteTable` | `D_80066998` | `titles/spyro3/render/render_facts.h` |  |
 | `0x8006729C` | `g_LivesCounter` | `-` | `titles/spyro3/render/hud_anchor.h` |  |
 | `0x800672F0` | `g_EggCounter` | `-` | `titles/spyro3/render/hud_anchor.h` |  |
