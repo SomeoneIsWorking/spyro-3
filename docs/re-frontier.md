@@ -87,3 +87,11 @@ Statuses: ✅ re-verified · 🟡 re-partial · 🔬 in-progress · ⬜ todo · 
 - table: the SpriteData entries 0x42-0xA2 of *0x80070108 read the same in Sunrise Spring and Midday Gardens (RAM dumps with the Atlas open). The HUD's digit table *0x8006C788 (digits from the halfword at 0x800719CC, read by the value emitter 0x800291B8) is a different table whose entries move with the level: 0x8018C7EC with digits 2-9 on DR_TPAGE 0x0A in Sunrise Spring, 0x80190DBC with them on 0x0C and 0x1F in Midday Gardens.
 - where: — (port: psx-spyro titles/spyro3/render/sprite_fonts.h)
 - gap: none
+
+### spyro3.loading-picture — Spyro 3's level loading picture and the load under it
+- status: re-partial
+- deps: spyro3.identity
+- evidence: UpdateLoadingImage 0x80058778 sub-state 0 reads and LoadImages picture loadImg[cursorPos 0x8006FBCC] at count 0x8006FBC4 0, increments the count before the draw 0x80059038 lights it count*16, and leaves for sub-state 1 on reading 0xD. Sub-state 3 of the same update enters a level only for cursorPos 0..4 (FUN_80053944 path); 5 on are the story cards (New Game is 6, the cutscene cards after it 14, 15). The fade-out loop 0x80020168 (pass count in $s0, VSync(0) return 0x80020270) is called only from the draw 0x80059038 sub-state 3 (jal 0x8005933C). Loader 0x8002CA50 stage 0 calls ResetHuds 0x800282D8, whose SetHud/sprite lookup walks the table at [0x8006C738] in GetSpriteIndex 0x80027934 (loop at 0x80027958) for class -1: from the title screen the pointer is 0x800A2C7C and the walk costs 1.96M cycles, about 3.5 fields of guest CPU before the stage-0 read is issued. Stage 8 tests the code checksum 0x8006C6B4/0x8006C6B8 and zeroes random words at func_8002AB38 on a mismatch.
+- where: titles/spyro3/core/boot_facts.h; game/core/counted_screen_skip.*; titles/spyro3/core/loader_checksum.cpp
+- gap: Skipping the count-0 update (the picture CDLoadSync/LoadImage/DrawSync) leaves loader stage 7 waiting for good; which of its effects stage 7 needs is not traced.
+- notes: psx-spyro issue 0248
